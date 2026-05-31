@@ -16,43 +16,44 @@ font-family:Georgia, serif;
 
 }
 
-/* Cover Page */
+/* Birthday Cover Page */
 .book-cover{
 width:700px;
 max-width:90%;
 
 ```
-background:white;
+background:#ffffff;
 
 padding:60px;
 
+border-radius:25px;
+
+box-shadow:0 0 40px rgba(255,105,180,0.4);
+
 text-align:center;
-
-border-radius:20px;
-
-box-shadow:0 0 40px rgba(255,105,180,0.5);
 
 position:absolute;
 top:50%;
 left:50%;
-transform:translate(-50%, -50%);
+transform:translate(-50%,-50%);
 ```
 
 }
 
-/* Headings */
-h1{
+/* Main Heading */
+.book-cover h1{
 color:#ff1493;
 font-size:60px;
 }
 
-h2{
+/* Name */
+.book-cover h2{
 color:#c71585;
 font-size:40px;
 }
 
-/* Paragraph */
-p{
+/* Cover Text */
+.book-cover p{
 color:#8b004f;
 font-size:22px;
 line-height:1.8;
@@ -73,34 +74,58 @@ border-radius:30px;
 font-size:20px;
 
 cursor:pointer;
+
+transition:0.3s;
 ```
 
 }
 
 button:hover
 
-/* Chapter Section */
+/* Chapter Page */
 .chapter{
-width:80%;
-max-width:700px;
+width:800px;
+max-width:90%;
 
 ```
-background:white;
+background:#fffafc;
 
-padding:50px;
+padding:60px;
 
-border-radius:20px;
+border-radius:25px;
 
-box-shadow:0 0 20px rgba(255,105,180,0.3);
+box-shadow:0 0 40px rgba(255,105,180,0.4);
 
 text-align:center;
 
-margin:50px auto;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
 ```
 
 }
 
-/* Hide chapter at start */
+/* Chapter Title */
+.chapter h1{
+color:#ff1493;
+font-size:55px;
+}
+
+/* Chapter Subtitle */
+.chapter h2{
+color:#c71585;
+font-size:30px;
+}
+
+/* Chapter Text */
+.chapter p{
+color:#8b004f;
+font-size:26px;
+line-height:2;
+}
+
+/* Hide Chapter 1 Initially */
 #chapter1{
 display:none;
 }
