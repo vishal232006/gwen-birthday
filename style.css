@@ -4,10 +4,6 @@ padding:0;
 min-height:100vh;
 
 ```
-display:flex;
-justify-content:center;
-align-items:center;
-
 background:linear-gradient(
     135deg,
     #ffd6e7,
@@ -20,9 +16,10 @@ font-family:Georgia, serif;
 
 }
 
+/* Cover Page */
 .book-cover{
-width:80%;
-max-width:700px;
+width:700px;
+max-width:90%;
 
 ```
 background:white;
@@ -34,10 +31,16 @@ text-align:center;
 border-radius:20px;
 
 box-shadow:0 0 40px rgba(255,105,180,0.5);
+
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%, -50%);
 ```
 
 }
 
+/* Headings */
 h1{
 color:#ff1493;
 font-size:60px;
@@ -48,42 +51,56 @@ color:#c71585;
 font-size:40px;
 }
 
+/* Paragraph */
 p{
 color:#8b004f;
 font-size:22px;
 line-height:1.8;
 }
 
+/* Button */
 button{
 background:#ff69b4;
 color:white;
+
+```
 border:none;
+
 padding:15px 35px;
+
 border-radius:30px;
+
 font-size:20px;
+
 cursor:pointer;
+```
+
 }
 
-.btn{
-background:#ff69b4;
-color:white;
-text-decoration:none;
-padding:15px 35px;
-border-radius:30px;
-display:inline-block;
-}
+button:hover
 
+/* Chapter Section */
 .chapter{
 width:80%;
 max-width:700px;
-margin:50px auto;
+
+```
 background:white;
+
 padding:50px;
+
 border-radius:20px;
+
 box-shadow:0 0 20px rgba(255,105,180,0.3);
+
 text-align:center;
+
+margin:50px auto;
+```
+
 }
 
+/* Hide chapter at start */
 #chapter1{
 display:none;
 }
