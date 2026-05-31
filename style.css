@@ -9,10 +9,10 @@ justify-content:center;
 align-items:center;
 
 background:linear-gradient(
-135deg,
-#ffd6e7,
-#ffc0cb,
-#ffb6c1
+    135deg,
+    #ffd6e7,
+    #ffc0cb,
+    #ffb6c1
 );
 
 font-family:Georgia, serif;
@@ -21,73 +21,38 @@ font-family:Georgia, serif;
 }
 
 .book-cover{
-
-```
 width:700px;
-
 background:white;
-
 padding:60px;
-
 text-align:center;
-
 border-radius:20px;
-
 box-shadow:0 0 40px rgba(255,105,180,0.5);
-```
-
 }
 
 h1{
-
-```
 color:#ff1493;
-
 font-size:60px;
-```
-
 }
 
 h2{
-
-```
 color:#c71585;
-
 font-size:40px;
-```
-
 }
 
 p{
-
-```
 color:#8b004f;
-
 font-size:22px;
-
 line-height:1.8;
-```
-
 }
 
 button{
-
-```
 background:#ff69b4;
-
 color:white;
-
 border:none;
-
 padding:15px 35px;
-
 border-radius:30px;
-
 font-size:20px;
-
 cursor:pointer;
-```
-
 }
 
 .btn{
@@ -110,7 +75,6 @@ box-shadow:0 0 20px rgba(255,105,180,0.3);
 text-align:center;
 }
 
-/* Hide Chapter 1 initially */
 #chapter1{
 display:none;
 }
