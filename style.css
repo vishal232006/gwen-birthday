@@ -1,37 +1,32 @@
 .chapter{
-width:700px;
-max-width:90%;
+    width:70%;
+    max-width:700px;
 
-```
-background:white;
+    margin:80px auto;
 
-padding:60px;
+    background:white;
 
-text-align:center;
+    padding:60px;
 
-border-radius:20px;
+    border-radius:20px;
 
-box-shadow:0 0 40px rgba(255,105,180,0.5);
+    text-align:center;
 
-margin:80px auto;
-
-color:#8b004f;
-```
-
+    box-shadow:0 0 20px rgba(255,105,180,0.3);
 }
 
 .chapter h1{
-color:#ff1493;
-font-size:60px;
+    color:#ff1493;
+    font-size:60px;
 }
 
 .chapter h2{
-color:#c71585;
-font-size:40px;
+    color:#c71585;
+    font-size:40px;
 }
 
 .chapter p{
-color:#8b004f;
-font-size:22px;
-line-height:1.8;
+    color:#8b004f;
+    font-size:22px;
+    line-height:1.8;
 }
