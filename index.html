@@ -114,7 +114,7 @@
             background: white;
             padding: 15px;
             border-radius: 16px;
-            min-width: 75px;
+            min-width: 80px;
             box-shadow: 0 8px 20px rgba(233, 114, 134, 0.2);
             border: 1.5px solid #ffdae0;
         }
@@ -173,16 +173,15 @@
             <div class="card" style="margin-bottom: 0;">
                 <div style="font-size: 3rem; margin-bottom: 10px;">🎁</div>
                 <h2 style="font-size: 1.6rem;">Gwen's Birthday Countdown</h2>
-                <p id="countdown-status">Your special surprise will unlock soon... ✨</p>
+                <p id="countdown-status">Almost midnight... watch the clock! 🕛✨</p>
                 
                 <div class="timer-display">
-                    <div class="time-box"><span class="time-num" id="days">00</span><span class="time-label">Days</span></div>
-                    <div class="time-box"><span class="time-num" id="hours">00</span><span class="time-label">Hrs</span></div>
-                    <div class="time-box"><span class="time-num" id="minutes">00</span><span class="time-label">Mins</span></div>
-                    <div class="time-box"><span class="time-num" id="seconds">00</span><span class="time-label">Secs</span></div>
+                    <div class="time-box"><span class="time-num" id="hours">11</span><span class="time-label">Hrs</span></div>
+                    <div class="time-box"><span class="time-num" id="minutes">59</span><span class="time-label">Mins</span></div>
+                    <div class="time-box"><span class="time-num" id="seconds">59</span><span class="time-label">Secs</span></div>
                 </div>
 
-                <button class="btn" id="open-btn" disabled onclick="unlockStory()">Unlock Your Gift 🔒</button>
+                <button class="btn" id="open-btn" disabled onclick="unlockStory()">Waiting for Midnight... 🔒</button>
             </div>
         </div>
     </div>
@@ -195,8 +194,9 @@
     </div>
 
     <script>
-        // Set the countdown date here (Example: June 15)
-        const birthdayDate = new Date('June 15, 2026 00:00:00').getTime();
+        // Set how many seconds you want the countdown to last when she opens the page
+        // (Default is 15 seconds so she gets a perfect short countdown!)
+        let targetSeconds = 15; 
 
         // Floating Hearts Script
         function createHeart() {
@@ -213,24 +213,20 @@
         }
         setInterval(createHeart, 400);
 
-        // Timer Script
+        // Custom Midnight Rush Timer Script
         const timerInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = birthdayDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById("days").innerText = String(days).padStart(2, '0');
-            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-
-            if (distance < 0) {
+            if (targetSeconds > 0) {
+                targetSeconds--;
+                document.getElementById("hours").innerText = "11";
+                document.getElementById("minutes").innerText = "59";
+                document.getElementById("seconds").innerText = String(targetSeconds).padStart(2, '0');
+            } else {
                 clearInterval(timerInterval);
-                document.getElementById("countdown-status").innerHTML = "🎉 IT'S YOUR BIRTHDAY GWEN! 🎉";
+                document.getElementById("hours").innerText = "12";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                
+                document.getElementById("countdown-status").innerHTML = "🎉 IT'S MIDNIGHT! HAPPY BIRTHDAY GWEN! 🎉";
                 const openBtn = document.getElementById("open-btn");
                 openBtn.disabled = false;
                 openBtn.innerText = "Open The Story 📖";
@@ -238,6 +234,7 @@
             }
         }, 1000);
 
+        // Transition Screen Logic
         function unlockStory() {
             const screen = document.getElementById('countdown-screen');
             screen.style.opacity = '0';
