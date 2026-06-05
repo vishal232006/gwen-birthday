@@ -1,78 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Gwen(Abeya Sara)❤️</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Gwen (Abeya Sara) ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <link rel="stylesheet" href="style.css">
+    :root {
+      --pink-deep: #c2185b;
+      --pink-mid: #e91e8c;
+      --pink-soft: #f8bbd0;
+      --pink-pale: #fce4ec;
+      --pink-blush: #fff0f5;
+      --rose: #ff4081;
+      --gold: #f9a825;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--pink-blush);
+      color: #4a1533;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Floating petals bg ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 10%, #ffd6e7 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, #f8bbd0 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 40%, #fce4ec 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Cover page ── */
+    #cover {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      z-index: 1;
+    }
+
+    .cover-frame {
+      background: linear-gradient(145deg, rgba(255,255,255,0.85), rgba(252,228,236,0.7));
+      border: 3px solid var(--pink-soft);
+      border-radius: 24px;
+      padding: 60px 50px;
+      max-width: 640px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(194,24,91,0.15), 0 0 0 1px rgba(255,255,255,0.6) inset;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1.4s ease forwards;
+    }
+
+    .cover-roses {
+      font-size: 2.4rem;
+      letter-spacing: 8px;
+      margin-bottom: 20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .cover-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--pink-deep);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .cover-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--pink-mid);
+      font-style: italic;
+      margin-bottom: 30px;
+    }
+
+    .cover-dedication {
+      font-size: 1rem;
+      color: #8b3a62;
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+
+    .open-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--pink-mid), var(--pink-deep));
+      color: white;
+      padding: 14px 40px;
+      border-radius: 50px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.3rem;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 8px 24px rgba(233,30,140,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .open-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(233,30,140,0.45); }
+
+    /* ── Nav dots ── */
+    .nav-dots {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+    .nav-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--pink-soft);
+      border: 2px solid var(--pink-mid);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-dot.active, .nav-dot:hover { background: var(--pink-mid); transform: scale(1.4); }
+
+    /* ── Chapter pages ── */
+    .chapter {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      z-index: 1;
+    }
+
+    .chapter-card {
+      background: rgba(255,255,255,0.82);
+      border: 2px solid var(--pink-soft);
+      border-radius: 20px;
+      padding: 52px 48px;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 0 16px 50px rgba(194,24,91,0.12);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .chapter-card.visible { opacity: 1; transform: translateY(0); }
+
+    .chapter-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1rem;
+      color: var(--pink-mid);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .chapter-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--pink-deep);
+      line-height: 1.3;
+      margin-bottom: 28px;
+      position: relative;
+      padding-bottom: 18px;
+    }
+    .chapter-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--pink-mid), transparent);
+      border-radius: 2px;
+    }
+
+    .chapter-body {
+      font-size: 1.05rem;
+      line-height: 2;
+      color: #5d2a45;
+    }
+    .chapter-body p { margin-bottom: 14px; }
+    .chapter-body .line { display: block; margin: 4px 0; }
+    .chapter-body .poem-block {
+      background: linear-gradient(135deg, rgba(248,187,208,0.3), rgba(252,228,236,0.4));
+      border-left: 4px solid var(--pink-mid);
+      border-radius: 0 12px 12px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-style: italic;
+    }
+    .chapter-body .poem-heading {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.15rem;
+      color: var(--pink-deep);
+      margin-bottom: 6px;
+    }
+
+    .chapter-emoji { font-size: 2rem; margin-bottom: 16px; display: block; }
+
+    .divider {
+      text-align: center;
+      color: var(--pink-soft);
+      letter-spacing: 12px;
+      font-size: 1.1rem;
+      margin: 30px 0;
+    }
+
+    /* ── Final chapter special ── */
+    #final .chapter-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.9), rgba(252,228,236,0.8));
+      text-align: center;
+    }
+    #final .chapter-title::after { left: 50%; transform: translateX(-50%); }
+    #final .chapter-body { text-align: center; font-size: 1.1rem; }
+
+    .final-heart {
+      font-size: 3.5rem;
+      animation: pulse 1.4s ease-in-out infinite;
+      display: block;
+      margin: 20px 0;
+    }
+
+    .final-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--pink-deep);
+      border-top: 2px solid var(--pink-soft);
+      border-bottom: 2px solid var(--pink-soft);
+      padding: 20px 0;
+      margin: 20px 0;
+      line-height: 1.8;
+    }
+
+    .signature {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: var(--pink-mid);
+      margin-top: 20px;
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+
+    /* ── Floating hearts ── */
+    .hearts-bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .heart-particle {
+      position: absolute;
+      bottom: -30px;
+      font-size: 1rem;
+      animation: rise linear infinite;
+      opacity: 0;
+    }
+    @keyframes rise {
+      0% { opacity: 0; transform: translateY(0) scale(0.6); }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-100vh) scale(1.2); }
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--pink-pale); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-mid); border-radius: 3px; }
+
+    @media (max-width: 600px) {
+      .cover-frame, .chapter-card { padding: 36px 24px; }
+      .nav-dots { display: none; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <div class="book-cover">
+<!-- Floating hearts background -->
+<div class="hearts-bg" id="heartsContainer"></div>
 
-        <h1>Happy Birthday</h1>
+<!-- Nav dots -->
+<nav class="nav-dots" id="navDots"></nav>
 
-        <h2>Gwen(Abeya Sara )❤️</h2>
-
-        <p>
-            <i>Ur My Everything Dii ❤️ My Happiness , My World 🌏 , Ur My Owner Of My Heart And Ur My One And Only My Fav Person Dii And Ur My Gwen(Abeya Sara❤️) </i>
-        </p>
-
-  <button onclick="openStory()" class="btn">
-Open The Story 📖
-</button>
-    </div>
-
-    <script src="script.js"></script>
-<section id="chapter1" class="chapter">
-
-<h1><i><b>❤️ Chapter 1 ❤️</b></i></h1>
-
-<h2><i>I Don't Know How U Came To My Life , U Came And Mke Smile On My Face</i></h2>
-
-<p>
-<i>
-I love you in 4 seasons ❤️
-</i>
-<br><br>
-<i>
-Summer ☀️<br>
-Winter ❄️<br>
-Autumn 🍂<br>
-Rainy 🌧️
-</i>
-<br><br>
-<i>
-I love you in 3 days ❤️
-</i>
-<br><br>
-<i>
-Yesterday 💕<br>
-Today 💕<br>
-Tomorrow 💕
-</i>
-<br><br>
-<i>
-I love you in 2 times ❤️
-</i>
-<br><br>
-<i>
-Day ☀️<br>
-Night 🌙
-</i>
-<br><br>
-<i>
-And I love you in 1 day ❤️
-</i>
-<br><br>
-<i>
-Everyday ❤️
-</i>
-</p>
-
+<!-- ═══════════ COVER ═══════════ -->
+<section id="cover" data-section="0">
+  <div class="cover-frame">
+    <div class="cover-roses">🌸 🌹 🌸</div>
+    <h1 class="cover-title">Happy Birthday<br/>Gwen 🎂</h1>
+    <p class="cover-subtitle">Abeya Sara ❤️</p>
+    <p class="cover-dedication">
+      Ur My Everything Dii ❤️<br/>
+      My Happiness , My World 🌏<br/>
+      Ur The Owner Of My Heart<br/>
+      My One And Only , My Fav Person Dii<br/>
+      And Ur My Gwen (Abeya Sara ❤️)
+    </p>
+    <a href="#chapter1" class="open-btn">Open The Story 📖</a>
+  </div>
 </section>
+
+<!-- ═══════════ CHAPTER 1 ═══════════ -->
+<section class="chapter" id="chapter1" data-section="1">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 1</span>
+    <h2 class="chapter-title">The Beginning</h2>
+    <div class="chapter-body">
+      <p>I don't know how you came into my life… but the moment you did, you made a smile appear on my face that I never knew I needed. 🌸</p>
+
+      <div class="poem-block">
+        <div class="poem-heading">I love you in 4 seasons ❤️</div>
+        <span class="line">Summer ☀️</span>
+        <span class="line">Winter ❄️</span>
+        <span class="line">Autumn 🍂</span>
+        <span class="line">Rainy 🌧️</span>
+      </div>
+
+      <div class="poem-block">
+        <div class="poem-heading">I love you in 3 days ❤️</div>
+        <span class="line">Yesterday 💕</span>
+        <span class="line">Today 💕</span>
+        <span class="line">Tomorrow 💕</span>
+      </div>
+
+      <div class="poem-block">
+        <div class="poem-heading">I love you in 2 times ❤️</div>
+        <span class="line">Day ☀️</span>
+        <span class="line">Night 🌙</span>
+      </div>
+
+      <div class="poem-block">
+        <div class="poem-heading">And I love you in 1 day ❤️</div>
+        <span class="line">Everyday ❤️</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 2 ═══════════ -->
+<section class="chapter" id="chapter2" data-section="2">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 2</span>
+    <h2 class="chapter-title">The First Wave</h2>
+    <div class="chapter-body">
+      <span class="chapter-emoji">👋</span>
+      <p>It started with something small — a bracelet on my wrist and a simple wave from you. That one wave meant more than a thousand words ever could.</p>
+      <p>I started wearing the bracelet every day. Not just as an accessory, but as a reminder — a reminder of you, of that moment, of that wave that quietly said <em>"I see you."</em></p>
+      <div class="divider">✦ ✦ ✦</div>
+      <p>That wave became the beginning of something beautiful. The beginning of special memories I'll never forget. 🌸</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 3 ═══════════ -->
+<section class="chapter" id="chapter3" data-section="3">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 3</span>
+    <h2 class="chapter-title">The Girl Who Changed My World</h2>
+    <div class="chapter-body">
+      <p>Before you, my world was ordinary. Then you walked in — and everything became more colorful, more beautiful, more alive. 🌏✨</p>
+      <p>You became my happiness on sad days. You became the reason I smiled even when nothing was going right. Without even trying, you made my world so much more wonderful.</p>
+      <p>And somewhere along the way, you didn't just become important to me — you became my <em>favorite person.</em></p>
+      <div class="poem-block">
+        <div class="poem-heading">You are my... ❤️</div>
+        <span class="line">My Happiness 🌟</span>
+        <span class="line">My World 🌏</span>
+        <span class="line">My Owner Of My Heart 💗</span>
+        <span class="line">My Favorite Person Forever 🌸</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 4 ═══════════ -->
+<section class="chapter" id="chapter4" data-section="4">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 4</span>
+    <h2 class="chapter-title">Our Conversations</h2>
+    <div class="chapter-body">
+      <span class="chapter-emoji">💬</span>
+      <p>Do you know what one of my favorite things is? Talking to you. The chats we have, the laughs, the random things we share — those moments are pure happiness to me.</p>
+      <p>Every time I see your message pop up, my face lights up. I wait for your messages like waiting for sunshine after rain ☀️</p>
+      <p>Every conversation we have — big or small — matters to me. Every word you send is a little gift. 💌</p>
+      <div class="divider">✦ ✦ ✦</div>
+      <p>Thank you for every chat, every laugh, and every happy moment we've shared together, Dii. 🌸</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 5 ═══════════ -->
+<section class="chapter" id="chapter5" data-section="5">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 5</span>
+    <h2 class="chapter-title">Miles Apart, Close at Heart</h2>
+    <div class="chapter-body">
+      <p style="font-size:1.6rem; text-align:center; margin-bottom:20px;">🇮🇳 &nbsp;&nbsp; ✈️ &nbsp;&nbsp; 🇸🇦</p>
+      <p>India and Saudi Arabia — two different places, so many miles between us. But distance? Distance has never once changed what I feel.</p>
+      <p>No matter how far apart we are, you are always in my thoughts. Morning, afternoon, night — somewhere in every day, I think of you, Dii. 💗</p>
+      <div class="poem-block">
+        <div class="poem-heading">Distance means so little...</div>
+        <span class="line">When someone means so much ❤️</span>
+        <span class="line">Miles cannot separate hearts 💕</span>
+        <span class="line">That are truly connected 🌸</span>
+      </div>
+      <p>Oceans and borders may exist on a map, but between us — there is only closeness. Always. 🌍</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 6 ═══════════ -->
+<section class="chapter" id="chapter6" data-section="6">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 6</span>
+    <h2 class="chapter-title">Things I Love About You</h2>
+    <div class="chapter-body">
+      <div class="poem-block">
+        <div class="poem-heading">Your Smile 😊</div>
+        <p>Your smile is something magical. When you smile, the whole world feels warmer. It's one of the most beautiful things I've ever seen. 🌟</p>
+      </div>
+      <div class="poem-block">
+        <div class="poem-heading">Your Kindness ❤️</div>
+        <p>The way you care, the way you're always so gentle and warm — your kindness is rare and so, so precious. Never change it. 💗</p>
+      </div>
+      <div class="poem-block">
+        <div class="poem-heading">Your Personality ✨</div>
+        <p>There is no one like you, Dii. Your personality — the way you talk, the way you laugh, the way you just are — is one in a million.</p>
+      </div>
+      <p><em>You are special not because of one thing — but because of everything you are. 🌸</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 7 ═══════════ -->
+<section class="chapter" id="chapter7" data-section="7">
+  <div class="chapter-card">
+    <span class="chapter-label">🌸 Chapter 7</span>
+    <h2 class="chapter-title">Thank You</h2>
+    <div class="chapter-body">
+      <span class="chapter-emoji">🙏</span>
+      <p>Thank you, Dii. Thank you for entering my life when you did. For every smile you gave me, every memory we made, every conversation that made my day better — thank you. 💗</p>
+      <p>Thank you for making me feel like I matter. Thank you for being so kind, so warm, so genuinely you.</p>
+      <div class="poem-block">
+        <div class="poem-heading">Thank you for...</div>
+        <span class="line">Entering my life 🌸</span>
+        <span class="line">The memories we made 💕</span>
+        <span class="line">Every smile you gave me 😊</span>
+        <span class="line">Making my world brighter ✨</span>
+        <span class="line">Being YOU ❤️</span>
+      </div>
+      <p>I am so grateful that the universe brought you into my story. 🌙</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CHAPTER 8 ═══════════ -->
+<section class="chapter" id="chapter8" data-section="8">
+  <div class="chapter-card">
+    <span class="chapter-label">🎂 Chapter 8</span>
+    <h2 class="chapter-title">Happy Birthday Gwen</h2>
+    <div class="chapter-body" style="text-align:center;">
+      <span class="chapter-emoji">🎂🎉🎈</span>
+      <p>Today is YOUR day, Dii. The day the world became a better place — because you were born. 🌸</p>
+      <div class="poem-block" style="text-align:left;">
+        <div class="poem-heading">On your birthday, I wish you...</div>
+        <span class="line">Happiness that never ends 😊</span>
+        <span class="line">Success in everything you do 🌟</span>
+        <span class="line">Health to live your best life 💪</span>
+        <span class="line">Love from everyone around you 💗</span>
+        <span class="line">All your dreams coming true ✨</span>
+      </div>
+      <p style="font-family:'Dancing Script',cursive; font-size:1.5rem; color:var(--pink-deep);">
+        May every candle you blow represent a wish that comes true. 🕯️
+      </p>
+      <p>Happy Birthday, Gwen (Abeya Sara). You deserve the whole world and more. 🌍❤️</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FINAL CHAPTER ═══════════ -->
+<section class="chapter" id="final" data-section="9">
+  <div class="chapter-card">
+    <span class="chapter-label">❤️ Final Chapter</span>
+    <h2 class="chapter-title" style="text-align:center;">The End… Or Just The Beginning?</h2>
+    <div class="chapter-body">
+      <span class="final-heart">❤️</span>
+      <p>Every story has an ending. But ours? Ours feels like it's only just beginning. 🌸</p>
+      <div class="final-quote">
+        "No matter what happens, no matter where life takes us — you will always be special to me, Dii.<br/><br/>
+        Always and always. ❤️"
+      </div>
+      <p>Thank you for being part of my story. Thank you for being my happiness, my world, my Gwen.</p>
+      <p style="margin-top:20px; font-size:1rem; color:#8b3a62; letter-spacing:2px;">🌸 &nbsp; Happy Birthday &nbsp; 🌸</p>
+      <div class="signature">— With all my heart ❤️</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Floating hearts
+  const container = document.getElementById('heartsContainer');
+  const emojis = ['❤️','🌸','💕','💗','🌹','✨','💖','🌷'];
+  for (let i = 0; i < 22; i++) {
+    const el = document.createElement('div');
+    el.className = 'heart-particle';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = (8 + Math.random() * 14) + 's';
+    el.style.animationDelay = (Math.random() * 12) + 's';
+    el.style.fontSize = (0.7 + Math.random() * 1.2) + 'rem';
+    container.appendChild(el);
+  }
+
+  // Nav dots
+  const sections = document.querySelectorAll('[data-section]');
+  const navDots = document.getElementById('navDots');
+  sections.forEach((s, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.title = s.querySelector('.chapter-label, h1')?.textContent?.trim() || '';
+    dot.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+    navDots.appendChild(dot);
+  });
+
+  // Intersection observer for card animation & nav dots
+  const cards = document.querySelectorAll('.chapter-card');
+  const dots = document.querySelectorAll('.nav-dot');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  cards.forEach(c => observer.observe(c));
+
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = e.target.dataset.section;
+        dots.forEach((d, i) => d.classList.toggle('active', i == idx));
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => sectionObserver.observe(s));
+</script>
 </body>
 </html>
