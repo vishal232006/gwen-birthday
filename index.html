@@ -262,19 +262,19 @@
                 clearInterval(timerInterval);
                 document.getElementById("seconds-counter").innerText = "00";
                 
-                // YOUR EXACT TEXT CHANGE RIGHT HERE!
+                // Text Change
                 document.getElementById("countdown-status").style.fontSize = "1.3rem";
                 document.getElementById("countdown-status").style.color = "#d14760";
                 document.getElementById("countdown-status").innerHTML = "🌸 Happy Birthday Dii Gwen Paithyam 🤪 🌸";
                 document.getElementById("gift-icon").innerText = "🎉";
                 
-                // Unlock the main story button
+                // Unlock Button
                 const openBtn = document.getElementById("open-btn");
                 openBtn.disabled = false;
                 openBtn.innerHTML = "Open The Story 📖";
                 openBtn.style.background = "linear-gradient(135deg, #e94e6b 0%, #ff2a54 100%)";
 
-                // Trigger a heavy burst of flowers and hearts right away!
+                // Trigger Flower Burst
                 triggerFlowerBurst();
             }
         }, 1000);
@@ -285,19 +285,16 @@
             const particle = document.createElement('div');
             particle.classList.add('heart-particle');
             
-            // Mixing flowers, hearts, and celebratory smileys
             const symbols = ['🌸', '🌹', '❤️', '💕', '✨', '🌺', '🌻'];
             particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            
             particle.style.left = Math.random() * 100 + 'vw';
             
             if (isBurst) {
-                // Burst elements fly up faster and have random sizes
-                particle.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 seconds
-                particle.style.fontSize = (Math.random() * 25 + 20) + 'px'; // 20px to 45px
+                particle.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                particle.style.fontSize = (Math.random() * 25 + 20) + 'px';
                 particle.style.opacity = '1';
             } else {
-                particle.style.animationDuration = (Math.random() * 3 + 5) + 's'; // 5-8 seconds
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's';
                 particle.style.fontSize = (Math.random() * 15 + 15) + 'px';
             }
             
@@ -305,22 +302,19 @@
             setTimeout(() => { particle.remove(); }, 8000);
         }
         
-        // Continuous gentle background floating
         setInterval(() => { createParticle(false); }, 400);
 
         // Infinite Flower Burst Trigger
         function triggerFlowerBurst() {
-            // Instantly spawn 20 particles for an immediate pop effect
             for(let i=0; i<25; i++) {
                 createParticle(true);
             }
-            // Keep spawning faster burst particles infinitely until she changes screens
             burstInterval = setInterval(() => { createParticle(true); }, 150);
         }
 
         // Transition Screen Logic
         function unlockStory() {
-            clearInterval(burstInterval); // Stop intense burst to prevent performance lag on phone
+            clearInterval(burstInterval); // Clear intense burst for smooth story performance
             const screen = document.getElementById('countdown-screen');
             screen.style.opacity = '0';
             setTimeout(() => {
