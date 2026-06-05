@@ -64,7 +64,7 @@
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
             border-radius: 24px;
-            padding: 30px 24px;
+            padding: 40px 24px;
             box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
             border: 2px solid #fff;
             margin-bottom: 35px;
@@ -74,7 +74,7 @@
         h2 {
             font-family: 'Georgia', serif;
             color: #d14760;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 20px;
             font-weight: bold;
             letter-spacing: 0.5px;
@@ -104,33 +104,34 @@
             transition: opacity 0.8s ease, visibility 0.8s;
         }
 
-        .timer-display {
-            display: flex;
-            gap: 15px;
-            margin: 30px 0;
+        .single-timer-display {
+            margin: 25px 0;
+            display: inline-block;
         }
 
-        .time-box {
+        .big-time-box {
             background: white;
-            padding: 15px;
-            border-radius: 16px;
-            min-width: 80px;
-            box-shadow: 0 8px 20px rgba(233, 114, 134, 0.2);
-            border: 1.5px solid #ffdae0;
+            padding: 20px 35px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(233, 114, 134, 0.25);
+            border: 2px solid #ffdae0;
         }
 
-        .time-num {
-            font-size: 2rem;
+        .time-num-large {
+            font-size: 3.5rem;
             font-weight: bold;
             color: #d14760;
             display: block;
+            line-height: 1;
         }
 
-        .time-label {
-            font-size: 0.75rem;
+        .time-label-large {
+            font-size: 0.85rem;
             text-transform: uppercase;
             color: #a38288;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            margin-top: 5px;
+            display: block;
         }
 
         /* --- UNLOCK BUTTON --- */
@@ -146,10 +147,12 @@
             box-shadow: 0 6px 20px rgba(255, 117, 140, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
             margin-top: 15px;
+            width: 100%;
         }
 
         .btn:disabled {
             background: #e0cbd0;
+            color: #ffffff;
             box-shadow: none;
             cursor: not-allowed;
             transform: none;
@@ -160,45 +163,65 @@
             display: none;
             padding-top: 20px;
         }
+
+        /* --- REVEAL ANIMATIONS FOR LATER --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Floating Background Layer -->
     <div class="floating-hearts" id="hearts-container"></div>
 
-    <!-- COUNTDOWN SCREEN CONTAINER -->
     <div id="countdown-screen">
         <div class="container">
             <div class="card" style="margin-bottom: 0;">
                 <div style="font-size: 3rem; margin-bottom: 10px;">🎁</div>
-                <h2 style="font-size: 1.6rem;">Gwen's Birthday Countdown</h2>
-                <p id="countdown-status">Almost midnight... watch the clock! 🕛✨</p>
+                <h2 style="font-size: 1.6rem; color: #d14760;">Gwen's Birthday Surprise</h2>
+                <p id="countdown-status">Your special gift is unlocking... ✨</p>
                 
-                <div class="timer-display">
-                    <div class="time-box"><span class="time-num" id="hours">11</span><span class="time-label">Hrs</span></div>
-                    <div class="time-box"><span class="time-num" id="minutes">59</span><span class="time-label">Mins</span></div>
-                    <div class="time-box"><span class="time-num" id="seconds">59</span><span class="time-label">Secs</span></div>
+                <div class="single-timer-display">
+                    <div class="big-time-box">
+                        <span class="time-num-large" id="seconds-counter">09</span>
+                        <span class="time-label-large">Seconds Left</span>
+                    </div>
                 </div>
 
-                <button class="btn" id="open-btn" disabled onclick="unlockStory()">Waiting for Midnight... 🔒</button>
+                <button class="btn" id="open-btn" disabled onclick="unlockStory()">Unlocking... 🔒</button>
             </div>
         </div>
     </div>
 
-    <!-- ==========================================
-         STORY BOOK SPACE (WE WILL PLACE CHAPTERS INSIDE HERE)
-         ========================================== -->
     <div id="story-content" class="container">
-        <!-- Chapters will go here next! -->
-    </div>
+        </div>
 
     <script>
-        // Set how many seconds you want the countdown to last when she opens the page
-        // (Default is 15 seconds so she gets a perfect short countdown!)
-        let targetSeconds = 15; 
+        // Pure 9-Second Countdown Logic
+        let count = 9;
+        const timerInterval = setInterval(function() {
+            count--;
+            document.getElementById("seconds-counter").innerText = String(count).padStart(2, '0');
 
-        // Floating Hearts Script
+            if (count <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById("countdown-status").innerHTML = "🎉 UNLOCKED FOR YOU! 🎉";
+                
+                const openBtn = document.getElementById("open-btn");
+                openBtn.disabled = false;
+                openBtn.innerHTML = "Open The Story 📖";
+                openBtn.style.background = "linear-gradient(135deg, #e94e6b 0%, #ff2a54 100%)";
+            }
+        }, 1000);
+
+        // Background Hearts Generator
         function createHeart() {
             const container = document.getElementById('hearts-container');
             const heart = document.createElement('div');
@@ -213,27 +236,6 @@
         }
         setInterval(createHeart, 400);
 
-        // Custom Midnight Rush Timer Script
-        const timerInterval = setInterval(function() {
-            if (targetSeconds > 0) {
-                targetSeconds--;
-                document.getElementById("hours").innerText = "11";
-                document.getElementById("minutes").innerText = "59";
-                document.getElementById("seconds").innerText = String(targetSeconds).padStart(2, '0');
-            } else {
-                clearInterval(timerInterval);
-                document.getElementById("hours").innerText = "12";
-                document.getElementById("minutes").innerText = "00";
-                document.getElementById("seconds").innerText = "00";
-                
-                document.getElementById("countdown-status").innerHTML = "🎉 IT'S MIDNIGHT! HAPPY BIRTHDAY GWEN! 🎉";
-                const openBtn = document.getElementById("open-btn");
-                openBtn.disabled = false;
-                openBtn.innerText = "Open The Story 📖";
-                openBtn.style.background = "linear-gradient(135deg, #e94e6b 0%, #ff2a54 100%)";
-            }
-        }, 1000);
-
         // Transition Screen Logic
         function unlockStory() {
             const screen = document.getElementById('countdown-screen');
@@ -241,6 +243,7 @@
             setTimeout(() => {
                 screen.style.display = 'none';
                 document.getElementById('story-content').style.display = 'block';
+                window.scrollTo(0, 0);
             }, 800);
         }
     </script>
