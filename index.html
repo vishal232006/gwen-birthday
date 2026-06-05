@@ -32,7 +32,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 150; /* High z-index so it bursts over everything */
         }
 
         .heart-particle {
@@ -134,6 +134,11 @@
             display: block;
         }
 
+        #countdown-status {
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+
         /* --- UNLOCK BUTTON --- */
         .btn {
             background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
@@ -158,13 +163,24 @@
             transform: none;
         }
 
+        /* --- SPECIAL MATH CARDS IN CHAPTER 1 --- */
+        .math-box {
+            background: #fff5f7;
+            border-radius: 14px;
+            padding: 12px;
+            margin: 12px 0;
+            border-left: 4px solid #ff758c;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
         /* --- MAIN STORY ANCHOR (HIDDEN AT FIRST) --- */
         #story-content {
             display: none;
             padding-top: 20px;
         }
 
-        /* --- REVEAL ANIMATIONS FOR LATER --- */
+        /* --- SCROLL REVEAL EFFECT --- */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
@@ -179,12 +195,14 @@
 </head>
 <body>
 
+    <!-- Floating Pink Background Layer -->
     <div class="floating-hearts" id="hearts-container"></div>
 
+    <!-- 1. THE 9-SECOND COUNTDOWN SCREEN -->
     <div id="countdown-screen">
         <div class="container">
             <div class="card" style="margin-bottom: 0;">
-                <div style="font-size: 3rem; margin-bottom: 10px;">🎁</div>
+                <div style="font-size: 3rem; margin-bottom: 10px;" id="gift-icon">🎁</div>
                 <h2 style="font-size: 1.6rem; color: #d14760;">Gwen's Birthday Surprise</h2>
                 <p id="countdown-status">Your special gift is unlocking... ✨</p>
                 
@@ -200,51 +218,131 @@
         </div>
     </div>
 
+    <!-- 2. MAIN STORY BOOK CONTENT -->
     <div id="story-content" class="container">
+
+        <!-- INTRO HERO COVER CARD -->
+        <div class="card">
+            <div style="font-size: 2.5rem; margin-bottom: 10px;">🌹 🎂 🌸</div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 10px;">Happy Birthday Gwen</h2>
+            <p style="font-weight: bold; color: #d14760;">Abeya Sara ❤️</p>
+            <hr style="border: 0; height: 1px; background: #ffdae0; margin: 20px 0;">
+            <p>✨ Ur My Everything Dii ✨</p>
+            <p>🌍 My Happiness, My World 🌍</p>
+            <p>❤️ Ur The Owner Of My Heart ❤️</p>
+            <p>🌸 My One And Only, My Fav Person Dii 🌸</p>
+            <p style="font-weight: bold; color: #d14760;">And Ur My Gwen (Abeya Sara) 💘</p>
+            <p style="font-size: 0.9rem; color: #a38288; margin-top: 30px;">Scroll down to read our story... 👇</p>
         </div>
 
+        <!-- CHAPTER 1: THE BEGINNING -->
+        <div class="card reveal">
+            <h2>🌸 CHAPTER 1<br><span style="font-family: 'Georgia'; font-style: italic;">The Beginning</span></h2>
+            <p>I don't know how you came into my life... but the moment you did, you made a smile appear on my face that I never knew I needed. 🌸</p>
+            
+            <div class="math-box">❤️ <strong>I love you in 4 seasons:</strong> Summer ☀️, Winter ❄️, Autumn 🍂, Rainy 🌧️</div>
+            <div class="math-box">❤️ <strong>I love you in 3 days:</strong> Yesterday 🌸, Today 💕, Tomorrow 💖</div>
+            <div class="math-box">❤️ <strong>I love you in 2 times:</strong> Day ☀️, Night 🌙</div>
+            <div class="math-box">❤️ <strong>And I love you in 1 day:</strong> Everyday ❤️</div>
+        </div>
+
+    </div>
+
+    <!-- --- JAVASCRIPT ANIMATIONS AND CLOCK LOGIC --- -->
     <script>
-        // Pure 9-Second Countdown Logic
         let count = 9;
+        let burstInterval;
+
+        // Pure 9-Second Countdown Logic
         const timerInterval = setInterval(function() {
             count--;
             document.getElementById("seconds-counter").innerText = String(count).padStart(2, '0');
 
             if (count <= 0) {
                 clearInterval(timerInterval);
-                document.getElementById("countdown-status").innerHTML = "🎉 UNLOCKED FOR YOU! 🎉";
+                document.getElementById("seconds-counter").innerText = "00";
                 
+                // YOUR EXACT TEXT CHANGE RIGHT HERE!
+                document.getElementById("countdown-status").style.fontSize = "1.3rem";
+                document.getElementById("countdown-status").style.color = "#d14760";
+                document.getElementById("countdown-status").innerHTML = "🌸 Happy Birthday Dii Gwen Paithyam 🤪 🌸";
+                document.getElementById("gift-icon").innerText = "🎉";
+                
+                // Unlock the main story button
                 const openBtn = document.getElementById("open-btn");
                 openBtn.disabled = false;
                 openBtn.innerHTML = "Open The Story 📖";
                 openBtn.style.background = "linear-gradient(135deg, #e94e6b 0%, #ff2a54 100%)";
+
+                // Trigger a heavy burst of flowers and hearts right away!
+                triggerFlowerBurst();
             }
         }, 1000);
 
-        // Background Hearts Generator
-        function createHeart() {
+        // Background Floating Particle System
+        function createParticle(isBurst = false) {
             const container = document.getElementById('hearts-container');
-            const heart = document.createElement('div');
-            heart.classList.add('heart-particle');
-            const symbols = ['🌸', '❤️', '💕', '✨', '🌹'];
-            heart.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
-            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
-            container.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 8000);
+            const particle = document.createElement('div');
+            particle.classList.add('heart-particle');
+            
+            // Mixing flowers, hearts, and celebratory smileys
+            const symbols = ['🌸', '🌹', '❤️', '💕', '✨', '🌺', '🌻'];
+            particle.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            particle.style.left = Math.random() * 100 + 'vw';
+            
+            if (isBurst) {
+                // Burst elements fly up faster and have random sizes
+                particle.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 seconds
+                particle.style.fontSize = (Math.random() * 25 + 20) + 'px'; // 20px to 45px
+                particle.style.opacity = '1';
+            } else {
+                particle.style.animationDuration = (Math.random() * 3 + 5) + 's'; // 5-8 seconds
+                particle.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            }
+            
+            container.appendChild(particle);
+            setTimeout(() => { particle.remove(); }, 8000);
         }
-        setInterval(createHeart, 400);
+        
+        // Continuous gentle background floating
+        setInterval(() => { createParticle(false); }, 400);
+
+        // Infinite Flower Burst Trigger
+        function triggerFlowerBurst() {
+            // Instantly spawn 20 particles for an immediate pop effect
+            for(let i=0; i<25; i++) {
+                createParticle(true);
+            }
+            // Keep spawning faster burst particles infinitely until she changes screens
+            burstInterval = setInterval(() => { createParticle(true); }, 150);
+        }
 
         // Transition Screen Logic
         function unlockStory() {
+            clearInterval(burstInterval); // Stop intense burst to prevent performance lag on phone
             const screen = document.getElementById('countdown-screen');
             screen.style.opacity = '0';
             setTimeout(() => {
                 screen.style.display = 'none';
                 document.getElementById('story-content').style.display = 'block';
-                window.scrollTo(0, 0);
+                revealCards();
             }, 800);
+        }
+
+        // Scroll Reveal Effect Code
+        window.addEventListener('scroll', revealCards);
+        function revealCards() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 100;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
         }
     </script>
 </body>
